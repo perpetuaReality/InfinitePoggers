@@ -4,6 +4,8 @@
 Exactly what it says in the tin!
 A one-page simulator of a Twitch.tv chat spamming the Pogchamp emote for eternity.
 
+### ***[See it in action here!](https://perpetuareality.com/code-projects/poggers/)***
+
 If you want to donate an username that you aren't using, or your current one, please [contact me on Twitter](https://www.twitter.com/perpetuareality) with proof!
 
 ## DISCLAIMER
