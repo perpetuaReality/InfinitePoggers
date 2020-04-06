@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="Infinite PogChamp chat generator!">
+	<link rel="shortcut icon" href="pogchamp.png" type="image/x-icon">
+	<link rel="icon" href="pogchamp.png" type="image/x-icon">
+	<meta property="og:title" content="Poggers!" />
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="https://perpetuareality.com/code-projects/poggers/" />
+	<meta property="og:image" content="https://perpetuareality.com/code-projects/poggers/pogchamp.png" />
+	<title>Poggers!</title>
+
+	<script
+		src="https://code.jquery.com/jquery-3.4.1.min.js"
+		integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+		crossorigin="anonymous"></script>
+  
+	<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+	<header>INFINITE POGCHAMP CHAT</header>
+	<div id="messages_wrapper_wrapper">
+		<div id="messages_wrapper">
+			<div id="messages"></div>
+		</div>
+	</div>
+	<footer>
+		<button onclick="document.getElementById('disclaimer').hidden='';">Disclaimer</button>
+		<i>by <a href="https://www.perpetuareality.com">perpetuareality</a> (<a href="https://www.twitter.com/perpetuareality">@perpetuareality</a>)</i><br/>
+		<i><a href="https://github.com/perpetuaReality/InfinitePoggers">GitHub Repository</a></i>
+	</footer>
+
+	<div id="tooltip"><b>PogChamp</b></div>
+
+	<div id="disclaimer" hidden="hidden">
+		<h2>DISCLAIMER</h2>
+		<p>
+		The usernames presented here are not intended to imply a connection with any current or former Twitch.tv users. If you hold any of these usernames and want them removed, please <a href="https://www.twitter.com/perpetuareality">contact me</a>!<br/>
+		This webpage is intended purely for entertainment purposes. Neither this webpage nor its creator have any affiliation with Twitch.tv.
+		</p>
+		<button style="font-size: medium;" onclick="document.getElementById('disclaimer').hidden='hidden';">Ok, Got It!</button>
+	</div>
+
+	<script>
+		function showTooltip(element) {
+			var tooltip = document.getElementById("tooltip");
+
+			//Show the Tooltip.
+			tooltip.style.visibility = "visible";
+
+			var divPos = element.getBoundingClientRect();
+			tooltip.style.top = (divPos.top - 30) + "px";
+			tooltip.style.left = (divPos.left - divPos.width / 2) + "px";
+		}
+
+		$.getJSON( "data.json", function(data) {
+			// SETTINGS
+			const emote_chance = .85,
+				no_mod_chance = .6,
+				min_interval = 200,
+				max_interval = 1500,
+				message_lifespan = 90000;
+
+			let users = [];
+			data.names.forEach(user => {
+				let mod_options = [
+					"mod.png", "prime.png", "sub.png", "cheer.png"
+				];
+				
+				// Once the first mod is selected, it can't be chosen again.
+				let first_mod = mod_options.splice(Math.floor(Math.random() * mod_options.length), 1)[0];
+				let second_mod = mod_options[Math.floor(Math.random() * mod_options.length)];
+
+				// Create users with random colours and mods.
+				users.push({
+					name: user,
+					colour: data.colours[Math.floor(Math.random() * data.colours.length)],
+					first_mod: (Math.random() < no_mod_chance) ? "" : `<img src='${first_mod}' onmouseenter='showTooltip(this);' onmouseout='document.getElementById("tooltip").style.visibility = "hidden"'/>`,
+					second_mod: (Math.random() < no_mod_chance) ? "" : `<img src='${second_mod}' onmouseenter='showTooltip(this);' onmouseout='document.getElementById("tooltip").style.visibility = "hidden"'/>`
+				});
+			});
+
+			console.log(users);
+
+			function pogScript() {
+				let message = document.createElement("div");
+				let user = users[Math.floor(Math.random() * users.length)];
+
+				// Set up the username part of the message.
+				message.innerHTML = `${user.first_mod} ${user.second_mod} <span style="font-weight: bold; color:${user.colour}">${user.name}:</span> `;
+				// Add the actual pogspam to the message.
+				if (Math.random() < emote_chance)
+					message.innerHTML += "<img src='pogchamp.png' onmouseenter='showTooltip(this);' onmouseout='document.getElementById(\"tooltip\").style.visibility = \"hidden\"'/>".repeat(Math.floor(Math.random() * 29) + 1);
+				else
+					// Every once in a while, send "POGGERS" instead of the actual emote.
+					message.innerHTML += "POGGERS" + "!".repeat(Math.floor(Math.random() * 20));
+
+				// Send the message.
+				document.getElementById("messages").appendChild(message);
+
+				// Autoscroll to bottom.
+				document.getElementById("messages_wrapper").scrollTo(0, document.getElementById("messages_wrapper").scrollHeight);
+
+				// Send another message in a while.
+				clearTimeout(next_msg_in);
+				next_msg_in = setInterval(pogScript, Math.floor(Math.random() * (max_interval - min_interval) ) + min_interval);
+
+				// Selfdestruct message after a while.
+				setTimeout(() => message.remove(), message_lifespan);
+			}
+
+			let next_msg_in = setInterval(pogScript, Math.floor(Math.random() * (max_interval - min_interval) ) + min_interval);
+		});
+	</script>
+</body>
+</html>

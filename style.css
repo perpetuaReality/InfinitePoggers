@@ -1,0 +1,122 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+* {
+	box-sizing: border-box;
+}
+html {
+	margin: 0px;
+	padding: 0px;
+	font-family: 'Roboto', sans-serif;
+	background-color: #18181B;
+	color: white;
+	font-size: small;
+	height: 100%;
+}
+body {
+	width: 340px;
+	height: 100%;
+	margin: auto;
+	display: flex;
+	flex-direction: column;
+}
+header {
+	text-align: center;
+	border-bottom: 1px solid #303032;
+	color: rgb(190, 184, 184);
+	height: 50px;
+	font-weight: bold;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+#messages_wrapper_wrapper {
+	display: flex;
+	flex: 1;
+	min-height: 0px;
+	margin: 0px 0px 10px;
+}
+#messages_wrapper {
+	flex: 1;
+	height: 100%;
+	max-height: 100%;
+	overflow-y: scroll;
+}
+#messages {
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-end;
+}
+#messages div {
+	padding: 5px 20px;
+	width: 100%;
+}
+#messages img {
+	display: inline-block;
+	margin: -.5rem 0;
+	position: relative;
+	vertical-align: middle;
+}
+button {
+	background-color: #8D47FF;
+	color: white;
+	text-align: center;
+	border-radius: 5px;
+	cursor: pointer;
+	padding: 7px;
+	width: 100%;
+	font-size: 13px;
+	font-weight: bold;
+	border: none;
+}
+button:hover {
+	background-color: #772CE8;
+}
+button:active {
+	background-color: #5C16C5;
+	box-shadow: rgb(169, 120, 241) 0px 0px 5px;
+}
+#disclaimer {
+	position: fixed;
+	width: 330px;
+	left: 50%;
+	transform: translateX(-50%);
+	bottom: 5px;
+	background-color: #18181B;
+	box-shadow: black 0px 0px 5px;
+	border-radius: 5px;
+	padding: 10px;
+	z-index: 100;
+}
+h2 {
+	margin: 0;
+}
+a {
+	color: #A66EFB;
+	text-decoration: none;
+}
+a:hover {
+	color: #A66EFB;
+	text-decoration: underline;
+}
+#tooltip {
+	background-color: white;
+	color: black;
+	border-radius: 5px;
+	position: fixed;
+	padding: 5px;
+	z-index: 30;
+	visibility: hidden;
+}
+.tooltip::after {
+	content: '';
+	border: 5px solid transparent;
+	border-top-color: white;
+	border-bottom: 0;
+	position: absolute;
+	bottom: -5px;
+	left: 50%;
+	margin-left: -5px;
+}
+footer {
+	text-align: center;
+	margin: 0 10px 5px 10px;
+}
